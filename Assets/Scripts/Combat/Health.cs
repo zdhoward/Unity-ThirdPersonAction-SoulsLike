@@ -12,7 +12,7 @@ public class Health : MonoBehaviour
 
     int currentHealth;
 
-    bool isDead;
+    public bool IsDead => currentHealth == 0;
     bool isInvulnerable;
 
     void Start()

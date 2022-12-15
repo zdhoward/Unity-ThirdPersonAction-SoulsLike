@@ -25,9 +25,7 @@ public class EnemyAttackingState : EnemyBaseState
 
     public override void Tick(float deltaTime)
     {
-        // Move(deltaTime);
-
-        // stateMachine.Animator.SetFloat(SpeedHash, 0f, AnimatorDampTime, deltaTime);
+        FacePlayer();
 
         if (GetNormalizedTime(stateMachine.Animator) >= 1)
         {
