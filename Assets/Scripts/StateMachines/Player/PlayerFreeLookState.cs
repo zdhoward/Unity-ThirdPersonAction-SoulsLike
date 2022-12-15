@@ -19,6 +19,7 @@ public class PlayerFreeLookState : PlayerBaseState
     {
         stateMachine.InputHandler.TargetEvent += InputHandler_TargetEvent;
         stateMachine.InputHandler.JumpEvent += InputHandler_JumpEvent;
+        //stateMachine.InputHandler.DodgeEvent += InputHandler_DodgeEvent;
 
         stateMachine.Animator.CrossFadeInFixedTime(FreeLookBlendTreeHash, CrossfadeDuration);
     }
@@ -49,6 +50,7 @@ public class PlayerFreeLookState : PlayerBaseState
     {
         stateMachine.InputHandler.TargetEvent -= InputHandler_TargetEvent;
         stateMachine.InputHandler.JumpEvent -= InputHandler_JumpEvent;
+        //stateMachine.InputHandler.DodgeEvent -= InputHandler_DodgeEvent;
     }
 
     void InputHandler_TargetEvent()
@@ -62,6 +64,19 @@ public class PlayerFreeLookState : PlayerBaseState
     void InputHandler_JumpEvent()
     {
         stateMachine.SwitchState(new PlayerJumpingState(stateMachine));
+    }
+
+    void InputHandler_DodgeEvent()
+    {
+        Vector2 dodgeDirection = stateMachine.InputHandler.MovementValue;
+
+        // // default to a back step
+        if (dodgeDirection == Vector2.zero)
+            dodgeDirection = Vector2.down;
+
+        dodgeDirection *= stateMachine.transform.forward;
+
+        stateMachine.SwitchState(new PlayerDodgingState(stateMachine, dodgeDirection));
     }
 
     void FaceMovementDirection(Vector3 movementDirection, float deltaTime)

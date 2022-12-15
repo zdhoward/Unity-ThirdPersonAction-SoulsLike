@@ -11,9 +11,6 @@ public class PlayerTargetingState : PlayerBaseState
     const float AnimatorDampTime = .1f;
     const float CrossfadeDuration = .1f;
 
-    Vector2 dodgeDirection;
-    float dodgeDuration;
-
     public PlayerTargetingState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
 
@@ -72,16 +69,13 @@ public class PlayerTargetingState : PlayerBaseState
 
     void InputHandler_DodgeEvent()
     {
-        if (Time.time - stateMachine.PreviousDodgeTime < stateMachine.DodgeCooldown)
-            return;
+        Vector2 dodgeDirection = stateMachine.InputHandler.MovementValue;
 
-        stateMachine.SetDodgeTime(Time.time);
-        dodgeDirection = stateMachine.InputHandler.MovementValue;
-        dodgeDuration = stateMachine.DodgeDuration;
-
-        // default to a back step
+        // // default to a back step
         if (dodgeDirection == Vector2.zero)
             dodgeDirection = Vector2.down;
+
+        stateMachine.SwitchState(new PlayerDodgingState(stateMachine, dodgeDirection));
     }
 
     void InputHandler_JumpEvent()
@@ -93,18 +87,8 @@ public class PlayerTargetingState : PlayerBaseState
     {
         Vector3 movement = new Vector3();
 
-        if (dodgeDuration > 0f)
-        {
-            movement += stateMachine.transform.right * dodgeDirection.x * stateMachine.DodgeDistance / stateMachine.DodgeDuration;
-            movement += stateMachine.transform.forward * dodgeDirection.y * stateMachine.DodgeDistance / stateMachine.DodgeDuration;
-
-            dodgeDuration = Mathf.Max(dodgeDuration - deltaTime, 0f);
-        }
-        else
-        {
-            movement += stateMachine.transform.right * stateMachine.InputHandler.MovementValue.x;
-            movement += stateMachine.transform.forward * stateMachine.InputHandler.MovementValue.y;
-        }
+        movement += stateMachine.transform.right * stateMachine.InputHandler.MovementValue.x;
+        movement += stateMachine.transform.forward * stateMachine.InputHandler.MovementValue.y;
 
         return movement;
     }
