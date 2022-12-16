@@ -12,6 +12,7 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public WeaponDamage WeaponDamage { get; private set; }
     [field: SerializeField] public Health Health { get; private set; }
     [field: SerializeField] public Ragdoll Ragdoll { get; private set; }
+    [field: SerializeField] public LedgeDetector LedgeDetector { get; private set; }
     [field: SerializeField] public float FreeLookMovementSpeed { get; private set; }
     [field: SerializeField] public float TargetingMovementSpeed { get; private set; }
     [field: SerializeField] public float RotationDamping { get; private set; }
@@ -51,4 +52,6 @@ public class PlayerStateMachine : StateMachine
     {
         SwitchState(new PlayerDeathState(this));
     }
+
+
 }
