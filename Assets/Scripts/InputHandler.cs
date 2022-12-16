@@ -13,7 +13,6 @@ public class InputHandler : MonoBehaviour, Controls.IPlayerActions
     public event Action JumpEvent;
     public event Action DodgeEvent;
     public event Action TargetEvent;
-    public event Action CancelEvent;
 
     Controls controls;
 
@@ -61,14 +60,6 @@ public class InputHandler : MonoBehaviour, Controls.IPlayerActions
             return;
 
         TargetEvent?.Invoke();
-    }
-
-    public void OnCancel(InputAction.CallbackContext ctx)
-    {
-        if (!ctx.performed)
-            return;
-
-        CancelEvent?.Invoke();
     }
 
     public void OnAttack(InputAction.CallbackContext ctx)

@@ -20,14 +20,14 @@ public class PlayerPullupState : PlayerBaseState
 
     public override void Tick(float deltaTime)
     {
-        if (stateMachine.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f)
-        {
-            stateMachine.Controller.enabled = false;
-            stateMachine.transform.Translate(ledgeOffset, Space.Self);
-            stateMachine.Controller.enabled = true;
+        if (GetNormalizedTime(stateMachine.Animator, "Climbing") < 1f)
+            return;
 
-            stateMachine.SwitchState(new PlayerFreeLookState(stateMachine, false));
-        }
+        stateMachine.Controller.enabled = false;
+        stateMachine.transform.Translate(ledgeOffset, Space.Self);
+        stateMachine.Controller.enabled = true;
+
+        stateMachine.SwitchState(new PlayerFreeLookState(stateMachine, false));
     }
 
     public override void Exit()

@@ -18,7 +18,7 @@ public class PlayerTargetingState : PlayerBaseState
 
     public override void Enter()
     {
-        stateMachine.InputHandler.CancelEvent += InputHandler_CancelEvent;
+        stateMachine.InputHandler.TargetEvent += InputHandler_TargetEvent;
         stateMachine.InputHandler.DodgeEvent += InputHandler_DodgeEvent;
         stateMachine.InputHandler.JumpEvent += InputHandler_JumpEvent;
 
@@ -55,12 +55,12 @@ public class PlayerTargetingState : PlayerBaseState
 
     public override void Exit()
     {
-        stateMachine.InputHandler.CancelEvent -= InputHandler_CancelEvent;
+        stateMachine.InputHandler.TargetEvent -= InputHandler_TargetEvent;
         stateMachine.InputHandler.DodgeEvent -= InputHandler_DodgeEvent;
         stateMachine.InputHandler.JumpEvent -= InputHandler_JumpEvent;
     }
 
-    void InputHandler_CancelEvent()
+    void InputHandler_TargetEvent()
     {
         stateMachine.Targeter.Cancel();
 

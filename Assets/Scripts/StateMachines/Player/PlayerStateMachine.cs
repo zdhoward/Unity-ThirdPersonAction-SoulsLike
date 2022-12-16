@@ -28,6 +28,8 @@ public class PlayerStateMachine : StateMachine
     {
         MainCameraTransform = Camera.main.transform;
 
+        GameSetup();
+
         SwitchState(new PlayerFreeLookState(this));
     }
 
@@ -53,5 +55,9 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerDeathState(this));
     }
 
-
+    void GameSetup()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 }
